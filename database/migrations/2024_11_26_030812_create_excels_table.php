@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('folder_id')->constrained('folders')->onDelete('cascade');
             $table->string('path');
+            $table->bigInteger('size')->nullable();
+            $table->string('last_access_at')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

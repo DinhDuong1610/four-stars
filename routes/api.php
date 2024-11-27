@@ -13,6 +13,8 @@ Route::get('/user', function (Request $request) {
 Route::get('/folders', [FolderController::class, 'index']);
 Route::post('/folder/store', [FolderController::class, 'store']);
 Route::get('/show', [FolderController::class, 'show']);
+Route::post('/folder/parent', [FolderController::class, 'getFolderParent']);
+Route::post('/folder/current', [FolderController::class, 'getFolderCurrent']);
 
 Route::get('/excels', [ExcelController::class, 'index']);
 Route::post('/excel/store', [ExcelController::class, 'store']);
