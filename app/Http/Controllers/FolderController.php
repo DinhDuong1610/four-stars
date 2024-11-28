@@ -23,7 +23,9 @@ class FolderController extends Controller
     {
         $folder = new Folder();
         $folder->name = $request->name;
-        $folder->parent_id = $request->parent_id;
+        if($request->parent_id) {
+            $folder->parent_id = $request->parent_id;
+        }
         $folder->save();
 
         return response()->json([
@@ -51,7 +53,7 @@ class FolderController extends Controller
 
         // Nếu không có "year", lấy danh sách các thư mục con của "faculty"
         if (!$year) {
-            $folders = Folder::where('parent_id', $faculty_id->id)->get();
+            $folders = Folder::where('parent_id', $faculty_id->id)->orderBy('created_at', 'desc')->get();
         } else {
             // Nếu có "year", tìm thư mục "year" trong "faculty"
             $year_id = Folder::where('parent_id', $faculty_id->id)->where('name', $year)->first();
@@ -62,7 +64,7 @@ class FolderController extends Controller
 
             // Nếu không có "class", lấy danh sách các thư mục con của "year"
             if (!$class) {
-                $folders = Folder::where('parent_id', $year_id->id)->get();
+                $folders = Folder::where('parent_id', $year_id->id)->orderBy('created_at', 'desc')->get();
             } else {
                 // Nếu có "class", tìm thư mục "class" trong "year"
                 $class_id = Folder::where('parent_id', $year_id->id)->where('name', $class)->first();
@@ -73,7 +75,7 @@ class FolderController extends Controller
 
                 // Nếu không có "course", lấy danh sách các thư mục con của "class"
                 if (!$course) {
-                    $folders = Folder::where('parent_id', $class_id->id)->get();
+                    $folders = Folder::where('parent_id', $class_id->id)->orderBy('created_at', 'desc')->get();
                 } else {
                     // Nếu có "course", tìm thư mục "course" trong "class"
                     $course_id = Folder::where('parent_id', $class_id->id)->where('name', $course)->first();
@@ -91,11 +93,11 @@ class FolderController extends Controller
                         }
 
                         // Trả về thông tin của thư mục "section" nếu có
-                        $excels = Excel::where('folder_id', $section_id->id)->get();
-                        $images = Image::where('folder_id', $section_id->id)->get();
+                        $excels = Excel::where('folder_id', $section_id->id)->orderBy('created_at', 'desc')->get();
+                        $images = Image::where('folder_id', $section_id->id)->orderBy('created_at', 'desc')->get();
                     } else {
                         // Trả về tất cả thư mục con của "course"
-                        $folders = Folder::where('parent_id', $course_id->id)->get();
+                        $folders = Folder::where('parent_id', $course_id->id)->orderBy('created_at', 'desc')->get();
                     }
                 }
             }
@@ -191,7 +193,7 @@ class FolderController extends Controller
 
         // Nếu không có "year", lấy danh sách các thư mục con của "faculty"
         if (!$year) {
-            $folder = null;
+            $folder = $faculty_id;
         } else {
             // Nếu có "year", tìm thư mục "year" trong "faculty"
             $year_id = Folder::where('parent_id', $faculty_id->id)->where('name', $year)->first();

@@ -22,8 +22,7 @@ class CreateImage extends FormRequest
     public function rules(): array
     {
         return [
-            'folder_id' => 'required',
-            'path' => 'required',
+            'folder_id' => 'required'
         ];
     }
 }
