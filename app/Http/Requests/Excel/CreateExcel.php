@@ -23,7 +23,7 @@ class CreateExcel extends FormRequest
     {
         return [
             'folder_id' => 'required',
-            'path' => 'required',
+            'name' => 'required',
         ];
     }
 }
