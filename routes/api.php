@@ -3,6 +3,7 @@
 use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\FolderController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,3 +22,8 @@ Route::post('/excel/store', [ExcelController::class, 'store']);
 
 Route::get('/images', [ImageController::class, 'index']);
 Route::post('/image/store', [ImageController::class, 'store']);
+
+Route::get('/students', [StudentController::class, 'index']);
+Route::post('/student/store', [StudentController::class, 'store']);
+Route::post('/student/update', [StudentController::class, 'update']);
+Route::post('/student/updateMultiple', [StudentController::class, 'updateMultiple']);

@@ -17,4 +17,8 @@ class Folder extends Model
     public function excels() {
         return $this->hasMany(Excel::class);
     }
+
+    public function students() {
+        return $this->hasMany(Student::class);
+    }
 }
